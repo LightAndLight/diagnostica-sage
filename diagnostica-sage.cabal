@@ -28,7 +28,11 @@ library
 
 executable example
   main-is:             Main.hs
-  build-depends:       base ^>=4.13.0.0, diagnostica-sage
+  build-depends:       base ^>=4.13.0.0
+                     , diagnostica
+                     , diagnostica-sage
+                     , sage
+                     , text >=1.2
   hs-source-dirs:      example
   default-language:    Haskell2010
   ghc-options:         -Wall -Werror
