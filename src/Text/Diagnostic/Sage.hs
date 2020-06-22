@@ -13,7 +13,7 @@ import Text.Diagnostic (Position(Offset), Diagnostic(Caret), Message(Message), R
 
 parseError :: ParseError -> Report
 parseError (Unexpected pos expecteds) =
-  emit (Offset pos) Caret (Message $! mkMessage expecteds)
+  emit (Offset pos) Caret (Message $! mkMessage)
   where
     renderLabel l =
       case l of
@@ -22,11 +22,17 @@ parseError (Unexpected pos expecteds) =
         Char c -> Text.pack $! show c
         Eof -> "end of file"
 
-    mkMessage labels =
+    expectedsList = toList expecteds
+
+    mkMessage =
       Lazy.toStrict . Builder.toLazyText $
-      Builder.fromText "Unexpected input. Expected: " <>
+      Builder.fromText
+        (case expectedsList of
+           [_] -> "expected "
+           _ -> "expected one of: "
+        ) <>
       fold
         (List.intersperse
           (Builder.fromText ", ")
-          (Builder.fromText . renderLabel <$> toList labels)
+          (Builder.fromText . renderLabel <$> expectedsList)
         )

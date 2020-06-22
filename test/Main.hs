@@ -30,7 +30,7 @@ main =
             expected =
               Left $
               Lazy.unlines
-              [ "test:1:5: error: Unexpected input. Expected: ' ', '(', ')', 'x'"
+              [ "test:1:5: error: expected one of: ' ', '(', ')', 'x'"
               , "  |"
               , "1 | (x x"
               , "  |     ^"
@@ -46,7 +46,7 @@ main =
             expected =
               Left $
               Lazy.unlines
-              [ "test:1:2: error: Unexpected input. Expected: end of file"
+              [ "test:1:2: error: expected end of file"
               , "  |"
               , "1 | xy"
               , "  |  ^"
