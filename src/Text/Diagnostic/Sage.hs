@@ -6,14 +6,13 @@ where
 import Data.Foldable (fold, toList)
 import qualified Data.List as List
 import qualified Data.Text as Text
-import qualified Data.Text.Lazy as Lazy
 import qualified Data.Text.Lazy.Builder as Builder
 import Text.Sage (ParseError(..), Label(..))
-import Text.Diagnostic (Position(Offset), Diagnostic(Caret), Message(Message), Report, emit)
+import Text.Diagnostic (Position(Offset), Diagnostic(Caret), Report, emit)
 
 parseError :: ParseError -> Report
 parseError (Unexpected pos expecteds) =
-  emit (Offset pos) Caret (Message $! mkMessage)
+  emit (Offset pos) Caret mkMessage
   where
     renderLabel l =
       case l of
@@ -25,7 +24,6 @@ parseError (Unexpected pos expecteds) =
     expectedsList = toList expecteds
 
     mkMessage =
-      Lazy.toStrict . Builder.toLazyText $
       Builder.fromText
         (case expectedsList of
            [_] -> "expected "
