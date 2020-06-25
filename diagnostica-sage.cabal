@@ -5,14 +5,17 @@ cabal-version:       2.4
 
 name:                diagnostica-sage
 version:             0.1.0.0
--- synopsis:
--- description:
--- bug-reports:
+synopsis:            diagnostica support for sage parse errors 
+description:         
+  diagnostica support for sage parse errors.
+  .
+  <<https://github.com/LightAndLight/diagnostica-sage/blob/master/res/example1.png>>
+bug-reports:         https://github.com/LightAndLight/diagnostica-sage/issues
 license:             BSD-3-Clause
 license-file:        LICENSE
 author:              Isaac Elliott
 maintainer:          isaace71295@gmail.com
--- copyright:
+copyright:           2020 Isaac Elliott
 category:            Language
 extra-source-files:  CHANGELOG.md
 
