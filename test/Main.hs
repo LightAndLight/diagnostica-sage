@@ -4,7 +4,9 @@ module Main where
 import Control.Applicative ((<|>), many)
 import Data.Bifunctor (first)
 import qualified Data.Text.Lazy as Lazy
-import Text.Sage (parse, between, char, sepBy, eof)
+import Text.Sage (parse)
+import Text.Parser.Combinators (between, sepBy, eof)
+import Text.Parser.Char (char)
 import Text.Diagnostic (Config(colors), render, defaultConfig)
 import Text.Diagnostic.Sage (parseError)
 import Test.Hspec

@@ -16,8 +16,8 @@ parseError (Unexpected pos expecteds) =
   where
     renderLabel l =
       case l of
-        Named n -> n
-        Symbol s -> Text.cons '"' $! Text.snoc s '"'
+        String s -> Text.pack s
+        Text t -> t
         Char c -> Text.pack $! show c
         Eof -> "end of file"
 
