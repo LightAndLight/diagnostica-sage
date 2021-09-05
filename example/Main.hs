@@ -1,28 +1,31 @@
 {-# language OverloadedStrings #-}
 module Main where
 
-import Control.Applicative ((<|>), many)
+import Control.Applicative ((<|>), many, some)
 import System.Environment (getArgs)
 import Text.Diagnostic (render, defaultConfig)
 import Text.Diagnostic.Sage (parseError)
-import Text.Sage (Parser, (<?>), parse, between, char, takeWhile1, pLower, symbol, eof)
+import Text.Sage (Parser, parseText)
+import Text.Parser.Combinators (between, eof, (<?>))
+import Text.Parser.Char (char, lower, string)
 import Data.Text (Text)
+import Streaming.Chars (Chars)
 import qualified Data.Text as Text
 import qualified Data.Text.Lazy.IO as Lazy
 
 data Expr = Var Text | Lam Text Expr | App Expr Expr
   deriving Show
 
-expr :: Parser s Expr
+expr :: Chars s => Parser s Expr
 expr =
   app <|>
   lam
   where
     spaces = many (char ' ') <?> "spaces"
-    ident = takeWhile1 pLower <?> "identifier"
+    ident = fmap Text.pack (some lower) <?> "identifier"
     lam =
       Lam <$ char '\\' <* spaces <*>
-      ident <* spaces <* symbol "->" <* spaces <*>
+      ident <* spaces <* string "->" <* spaces <*>
       expr
     app = foldl App <$> atom <*> many atom
     atom =
@@ -33,6 +36,6 @@ main :: IO ()
 main = do
   rawInput:_ <- getArgs
   let input = Text.pack rawInput
-  case parse (expr <* eof) input of
+  case parseText (expr <* eof) input of
     Left err -> Lazy.putStrLn (render defaultConfig "test" input $ parseError err)
     Right res -> print res

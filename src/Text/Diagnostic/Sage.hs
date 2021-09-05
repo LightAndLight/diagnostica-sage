@@ -8,11 +8,11 @@ import qualified Data.List as List
 import qualified Data.Text as Text
 import qualified Data.Text.Lazy.Builder as Builder
 import Text.Sage (ParseError(..), Label(..))
-import Text.Diagnostic (Position(Offset), Diagnostic(Caret), Report, emit)
+import Text.Diagnostic (Position(Offset), Diagnostic(Caret), Report, Message(..), emit)
 
 parseError :: ParseError -> Report
 parseError (Unexpected pos expecteds) =
-  emit (Offset pos) Caret mkMessage
+  emit (Offset pos) Caret (Message mkMessage)
   where
     renderLabel l =
       case l of
