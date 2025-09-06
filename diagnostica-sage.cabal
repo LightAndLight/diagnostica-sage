@@ -19,7 +19,8 @@ extra-source-files:  CHANGELOG.md
 library
   exposed-modules:     Text.Diagnostic.Sage
   build-depends:       base >=4.12 && <5
-                     , diagnostica
+                     , bytestring
+                     , diagnostica >=0.2 && <0.3
                      , sage
                      , text >=1.2
   hs-source-dirs:      src
@@ -29,9 +30,11 @@ library
 executable example
   main-is:             Main.hs
   build-depends:       base >=4.12 && <5
+                     , bytestring
                      , diagnostica
                      , diagnostica-sage
                      , parsers
+                     , parsers-sage
                      , sage
                      , text >=1.2
   hs-source-dirs:      example

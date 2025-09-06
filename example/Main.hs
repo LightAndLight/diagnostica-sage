@@ -5,18 +5,21 @@ import Control.Applicative ((<|>), many, some)
 import System.Environment (getArgs)
 import Text.Diagnostic (render, defaultConfig)
 import Text.Diagnostic.Sage (parseError)
-import Text.Sage (Parser, parseText)
+import Text.Sage (Parser, parse)
 import Text.Parser.Combinators (between, eof, (<?>))
 import Text.Parser.Char (char, lower, string)
+import Text.Parser.Sage.Instances ()
 import Data.Text (Text)
-import Streaming.Chars (Chars)
 import qualified Data.Text as Text
-import qualified Data.Text.Lazy.IO as Lazy
+import qualified Data.ByteString.Lazy as ByteString.Lazy
+import qualified Data.ByteString.Lazy.Char8 as ByteString.Lazy.Char8
+import qualified Data.Text.Lazy.Encoding as Text.Lazy.Encoding
+import qualified Data.Text.Lazy as Text.Lazy
 
 data Expr = Var Text | Lam Text Expr | App Expr Expr
   deriving Show
 
-expr :: Chars s => Parser s Expr
+expr :: Parser Expr
 expr =
   app <|>
   lam
@@ -35,7 +38,7 @@ expr =
 main :: IO ()
 main = do
   rawInput:_ <- getArgs
-  let input = Text.pack rawInput
-  case parseText (expr <* eof) input of
-    Left err -> Lazy.putStrLn (render defaultConfig "test" input $ parseError err)
+  let input = Text.Lazy.Encoding.encodeUtf8 $ Text.Lazy.pack rawInput
+  case parse (expr <* eof) (ByteString.Lazy.toStrict input) of
+    Left err -> ByteString.Lazy.Char8.putStrLn (render defaultConfig "test" input $ parseError err)
     Right res -> print res
