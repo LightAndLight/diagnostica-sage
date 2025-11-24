@@ -1,7 +1,7 @@
 cabal-version:       2.4
 
 name:                diagnostica-sage
-version:             0.1.1
+version:             0.1.1.1
 synopsis:            diagnostica support for sage parse errors 
 description:         
   diagnostica support for sage parse errors.
@@ -34,8 +34,8 @@ executable example
                      , diagnostica
                      , diagnostica-sage
                      , parsers
-                     , parsers-sage
                      , sage
+                     , sage-parsers-instances
                      , text >=1.2
   hs-source-dirs:      example
   default-language:    Haskell2010
