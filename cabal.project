@@ -1,4 +1,6 @@
-packages: .
+packages:
+  .
+  ./example
 
 constraints: parsers -attoparsec -binary -parsec
 

@@ -27,20 +27,6 @@ library
   default-language:    Haskell2010
   ghc-options:         -Wall -Werror
 
-executable example
-  main-is:             Main.hs
-  build-depends:       base >=4.12 && <5
-                     , bytestring
-                     , diagnostica
-                     , diagnostica-sage
-                     , parsers
-                     , sage
-                     , sage-parsers-instances
-                     , text >=1.2
-  hs-source-dirs:      example
-  default-language:    Haskell2010
-  ghc-options:         -Wall -Werror
-
 test-suite diagnostica-sage-test
   default-language:    Haskell2010
   type:                exitcode-stdio-1.0
