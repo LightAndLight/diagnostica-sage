@@ -33,10 +33,11 @@ test-suite diagnostica-sage-test
   hs-source-dirs:      test
   main-is:             Main.hs
   build-depends:       base >=4.12 && <5
+                     , bytestring
                      , diagnostica
                      , diagnostica-sage
                      , parsers
                      , sage
+                     , sage-parsers-instances
                      , hspec
-                     , text >=1.2
   ghc-options:         -Wall -Werror
